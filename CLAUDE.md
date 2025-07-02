@@ -9,14 +9,14 @@ A simple, universal web application for tracking and managing issues in the Karl
 - **Typography**: Kanit font family with proper weight hierarchy
 - **Icons**: Material Icons from Google Fonts
 - **Mapping**: Leaflet.js with OpenStreetMap tiles
-- **Data Storage**: Static JavaScript objects (no database required)
+- **Data Storage**: Airtable via REST API
 - **Language**: Czech language throughout the application
 
 ## Architecture
 - **Multi-page application**: Three separate HTML pages with shared design
-- **JSON data storage**: Issues stored in external JSON file
+- **Airtable integration**: Real-time data from Airtable base
 - **No build process**: Runs directly in any modern browser
-- **No server required**: Works from local file system
+- **No server required**: Direct API calls to Airtable
 - **CDN dependencies**: All external libraries loaded via CDN
 - **Universal compatibility**: Works on desktop and mobile browsers
 
@@ -26,24 +26,25 @@ karolin/
 ├── index.html             # Interactive map page
 ├── list.html              # Issues list page
 ├── detail.html            # Issue detail page
-├── issues.json            # Issues data storage
 ├── CLAUDE.md              # This specification file
 ├── README.md              # GitHub documentation
 └── .gitignore             # Git ignore file
 ```
 
 ## Data Model
-Issues are stored in `issues.json` with the following structure:
+Issues are stored in Airtable with the following field mapping:
+
+### Airtable Fields → Application Fields
 ```javascript
 {
-  id: string,
-  name: string,           // Format: "Location: issue name" (not capitalized)
-  description: string,
-  markup: string,         // Detailed markdown-style description
-  lat: number,           // GPS latitude (null if no GPS)
-  lng: number,           // GPS longitude (null if no GPS)
-  created: string,       // Date in YYYY-MM-DD format
-  updated: string        // Date in YYYY-MM-DD format
+  id: record.fields.id,                    // Issue ID number
+  name: Location + ": " + Issue name,      // Combined location and issue
+  description: record.fields.brief,        // Short description
+  markup: record.fields.description,       // Detailed markdown content (cleaned)
+  lat: record.fields.latitude,            // GPS latitude (null if no GPS)
+  lng: record.fields.longitude,           // GPS longitude (null if no GPS)
+  created: record.fields.created,         // Date in YYYY-MM-DD format
+  updated: record.fields['last-update']   // Date in YYYY-MM-DD format
 }
 ```
 
@@ -104,15 +105,16 @@ The map is geographically bounded by these GPS coordinates with added gutter:
 ## Installation & Usage
 
 ### Method 1: Direct File Access (Recommended)
-1. Download/save all files (`index.html`, `list.html`, `detail.html`, `issues.json`) to your computer
+1. Download/save all files (`index.html`, `list.html`, `detail.html`) to your computer
 2. Double-click `index.html` to open in your default browser
 3. Navigate between pages using the interface
+4. Data loads automatically from Airtable
 
 ### Method 2: File URL
 1. Navigate to the file location in your browser:
    `file:///path/to/karolin/index.html`
 
-### Method 3: Local Server (if needed)
+### Method 3: Local Server (if CORS issues)
 ```bash
 python3 -m http.server 8000
 # Then visit http://localhost:8000
@@ -134,11 +136,12 @@ python3 -m http.server 8000
 - **Edge**: Full support
 - **Mobile browsers**: Responsive design works on all modern mobile browsers
 
-## Dependencies (CDN)
-- **Leaflet.js 1.7.1**: Mapping library
-- **Kanit Font**: Typography from Google Fonts
-- **Material Icons**: Icon library from Google Fonts
+## Dependencies
+- **Leaflet.js 1.7.1**: Mapping library (CDN)
+- **Kanit Font**: Typography from Google Fonts (CDN)
+- **Material Icons**: Icon library from Google Fonts (CDN)
 - **OpenStreetMap**: Tile provider (no API key required)
+- **Airtable API**: Data storage and retrieval
 
 ## Design System Specifications
 
@@ -182,10 +185,10 @@ python3 -m http.server 8000
 - **Font Weights**: Increased weights for better readability
 
 ## Performance Features
-- **Lightweight**: Total application under 50KB (HTML + JSON)
+- **Lightweight**: Total application under 45KB (HTML only)
 - **Fast Loading**: CDN resources cached by browsers
 - **Efficient Rendering**: No framework overhead
-- **JSON Loading**: Async data loading with fetch API
+- **Real-time Data**: Direct Airtable API integration
 - **Mobile Optimized**: Responsive breakpoints and touch-friendly UI
 - **Accessible Design**: No performance impact from accessibility features
 
@@ -203,14 +206,38 @@ python3 -m http.server 8000
 - **Authentication**: SSH configured for sigy@sigy.cz
 - **Clean codebase**: Removed all React/Vite artifacts
 - **Multi-page structure**: Three HTML pages with shared navigation
-- **Data separation**: Issues stored in external JSON file
+- **Airtable integration**: Direct API calls for real-time data
+- **API credentials**: Embedded in HTML (read-only access)
+
+## Airtable Configuration
+
+### Base Setup
+- **Base ID**: `appakA8qOKhNzBh8a`
+- **Table Name**: `Issues`
+- **API Key**: Read-only access token (embedded in application)
+
+### Required Airtable Fields
+- `id` (Number): Unique issue identifier
+- `Issue name` (Text): Short issue name
+- `brief` (Text): Brief description
+- `description` (Long Text): Detailed markdown content
+- `latitude` (Number): GPS latitude coordinate
+- `longitude` (Number): GPS longitude coordinate
+- `created` (Date): Creation date
+- `last-update` (Date): Last modification date
+- `Location` (Text): Location/area name
+
+### Data Processing
+- **Markdown cleanup**: Automatically removes escaped characters (`\*` → `*`)
+- **Field mapping**: Combines location and issue name for titles
+- **Error handling**: Graceful fallbacks for missing data
 
 ## Future Enhancement Possibilities
-- **Data Persistence**: Local storage for user-added issues
-- **Issue Creation**: Form interface for adding new issues
+- **Issue Creation**: Web form interface for adding new issues to Airtable
 - **Filtering/Search**: Client-side filtering by category or location
-- **Offline Support**: Service worker for full offline functionality
+- **Offline Support**: Service worker with cached data
 - **Print Styles**: Optimized CSS for printing issue reports
 - **Advanced Markdown**: Full markdown rendering for markup field
-- **Image Support**: Photo attachments for issues
-- **GitHub Pages**: Automatic deployment from main branch
+- **Image Support**: Airtable attachments for issue photos
+- **API Proxy**: Serverless function to hide API credentials
+- **Real-time Updates**: WebSocket or polling for live data sync

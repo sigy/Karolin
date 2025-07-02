@@ -255,17 +255,56 @@
     <script>
         let issues = [];
         
-        // Load issues from JSON
+        // Load issues from Airtable
         async function loadIssues() {
             try {
-                const response = await fetch('issues.json');
+                const AIRTABLE_API_KEY = 'patfBqNYGlG1yDov3.3ee9243148d3a3223f235daa3b22c54eabc0dcf16b63f30cc97685492add9641';
+                const BASE_ID = 'appakA8qOKhNzBh8a';
+                const TABLE_NAME = 'Issues';
+                
+                const response = await fetch(
+                    `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${AIRTABLE_API_KEY}`
+                        }
+                    }
+                );
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const data = await response.json();
-                issues = data.issues;
+                
+                // Transform Airtable data to our format
+                issues = data.records.map(record => ({
+                    id: record.fields.id?.toString() || record.id,
+                    name: `${record.fields.Location || 'Neznámé místo'}: ${record.fields['Issue name'] || 'Nepojmenovaný problém'}`,
+                    description: record.fields.brief || '',
+                    markup: cleanMarkup(record.fields.description || ''),
+                    lat: record.fields.latitude || null,
+                    lng: record.fields.longitude || null,
+                    created: record.fields.created || '',
+                    updated: record.fields['last-update'] || record.fields.created || ''
+                }));
+                
                 renderIssuesList();
             } catch (error) {
-                console.error('Error loading issues:', error);
-                document.getElementById('issuesList').innerHTML = '<div class="loading">Chyba při načítání dat</div>';
+                console.error('Error loading issues from Airtable:', error);
+                document.getElementById('issuesList').innerHTML = '<div class="loading">Chyba při načítání dat z Airtable</div>';
             }
+        }
+        
+        // Clean escaped markdown characters
+        function cleanMarkup(markup) {
+            if (!markup) return '';
+            return markup
+                .replace(/\\\*/g, '*')     // \* → *
+                .replace(/\\#/g, '#')      // \# → #
+                .replace(/\\-/g, '-')      // \- → -
+                .replace(/\\\./g, '.')     // \. → .
+                .replace(/\\n/g, '\n');    // Keep actual newlines
         }
         
         function renderIssuesList() {

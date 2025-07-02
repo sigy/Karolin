@@ -15,10 +15,10 @@ A simple, accessible web application for tracking and managing community issues 
 ## 🚀 Quick Start
 
 ### Option 1: Download & Run Locally
-1. Download all files: [`index.html`](https://github.com/sigy/Karolin/raw/main/index.html), [`list.html`](https://github.com/sigy/Karolin/raw/main/list.html), [`detail.html`](https://github.com/sigy/Karolin/raw/main/detail.html), [`issues.json`](https://github.com/sigy/Karolin/raw/main/issues.json)
+1. Download all files: [`index.html`](https://github.com/sigy/Karolin/raw/main/index.html), [`list.html`](https://github.com/sigy/Karolin/raw/main/list.html), [`detail.html`](https://github.com/sigy/Karolin/raw/main/detail.html)
 2. Keep all files in the same folder
 3. Double-click `index.html` to open in your browser
-4. Navigate between pages using the interface
+4. Data loads automatically from Airtable - no setup required!
 
 ### Option 2: View Online
 Visit the live demo: **[sigy.github.io/Karolin](https://sigy.github.io/Karolin)**
@@ -38,7 +38,7 @@ The application includes 8 sample issues across Karlín:
 ## 🛠️ Technology
 
 - **Frontend**: Pure HTML, CSS, JavaScript (ES6+)
-- **Data Storage**: JSON file with fetch API
+- **Data Storage**: Airtable via REST API
 - **Mapping**: Leaflet.js with OpenStreetMap
 - **Typography**: Kanit font family
 - **Architecture**: Multi-page application with shared navigation
@@ -65,13 +65,22 @@ This is a **multi-page application** with three main pages:
 - **index.html** - Interactive map with issue markers
 - **list.html** - Complete list of issues with cards
 - **detail.html** - Detailed view of individual issues
-- **issues.json** - Centralized data storage
+- **Airtable** - Real-time data storage and management
 
 Features:
 - No build process required
-- No server dependencies (except for JSON loading)
-- Works offline (after first load)
+- No server dependencies
+- Real-time data from Airtable
 - Universal browser compatibility
+
+## 📊 Data Management
+
+Powered by **Airtable** for easy content management:
+- **Real-time updates** - Changes in Airtable appear immediately
+- **Easy editing** - Non-technical users can update issues
+- **Rich content** - Support for detailed markdown descriptions
+- **GPS coordinates** - Precise location data for mapping
+- **Collaborative** - Multiple people can edit and manage content
 
 ## 🌍 Localization
 
