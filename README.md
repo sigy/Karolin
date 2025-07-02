@@ -5,7 +5,8 @@ A simple, accessible web application for tracking and managing community issues 
 ## 🌟 Features
 
 - **Interactive Map** - View issues pinned to specific locations in Karlín
-- **Issue List** - Browse all reported issues with detailed descriptions
+- **Issue List** - Browse all reported issues with detailed descriptions  
+- **Detailed Pages** - Complete information for each issue with markdown content
 - **Czech Language** - Complete localization for Czech users
 - **Accessible Design** - WCAG 2.1 AA compliant with warm, readable colors
 - **Mobile Responsive** - Works seamlessly on all devices
@@ -14,9 +15,10 @@ A simple, accessible web application for tracking and managing community issues 
 ## 🚀 Quick Start
 
 ### Option 1: Download & Run Locally
-1. Download [`index.html`](https://github.com/sigy/Karolin/raw/main/index.html)
-2. Double-click to open in your browser
-3. That's it! No server or build process needed.
+1. Download all files: [`index.html`](https://github.com/sigy/Karolin/raw/main/index.html), [`list.html`](https://github.com/sigy/Karolin/raw/main/list.html), [`detail.html`](https://github.com/sigy/Karolin/raw/main/detail.html), [`issues.json`](https://github.com/sigy/Karolin/raw/main/issues.json)
+2. Keep all files in the same folder
+3. Double-click `index.html` to open in your browser
+4. Navigate between pages using the interface
 
 ### Option 2: View Online
 Visit the live demo: **[sigy.github.io/Karolin](https://sigy.github.io/Karolin)**
@@ -36,8 +38,10 @@ The application includes 8 sample issues across Karlín:
 ## 🛠️ Technology
 
 - **Frontend**: Pure HTML, CSS, JavaScript (ES6+)
+- **Data Storage**: JSON file with fetch API
 - **Mapping**: Leaflet.js with OpenStreetMap
 - **Typography**: Kanit font family
+- **Architecture**: Multi-page application with shared navigation
 - **No Dependencies**: Runs without build tools or server
 
 ## 🎨 Design
@@ -57,9 +61,15 @@ The application includes 8 sample issues across Karlín:
 
 ## 🏗️ Architecture
 
-This is a **single-file application** - everything you need is in `index.html`:
+This is a **multi-page application** with three main pages:
+- **index.html** - Interactive map with issue markers
+- **list.html** - Complete list of issues with cards
+- **detail.html** - Detailed view of individual issues
+- **issues.json** - Centralized data storage
+
+Features:
 - No build process required
-- No server dependencies
+- No server dependencies (except for JSON loading)
 - Works offline (after first load)
 - Universal browser compatibility
 

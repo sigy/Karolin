@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karølín</title>
+    <title>Karølín - Mapa problémů</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -43,159 +43,51 @@
             margin: 0;
             font-family: 'Kanit', sans-serif;
             letter-spacing: 0.5px;
+            text-decoration: none;
+            color: #F9F3EF;
         }
         
-        .tabs {
+        .header h1:hover {
+            opacity: 0.8;
+        }
+        
+        .nav-links {
             display: flex;
-            gap: 0;
-            border: 1px solid #456882;
-            border-radius: 4px;
-            overflow: hidden;
+            gap: 20px;
+            align-items: center;
         }
         
-        .tab {
-            background: transparent;
-            border: none;
-            padding: 14px 22px;
-            cursor: pointer;
+        .nav-link {
+            color: #F9F3EF;
+            text-decoration: none;
             font-size: 14px;
             font-weight: 500;
-            color: #F9F3EF;
-            font-family: 'Kanit', sans-serif;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            letter-spacing: 0.5px;
+            padding: 8px 16px;
+            border: 1px solid transparent;
+            border-radius: 4px;
             transition: all 0.2s;
-            border-right: 1px solid #456882;
         }
         
-        .tab:last-child {
-            border-right: none;
-        }
-        
-        .tab:hover {
+        .nav-link:hover {
+            border-color: #456882;
             background: rgba(69, 104, 130, 0.2);
         }
         
-        .tab.active {
+        .nav-link.active {
             background: #456882;
-            color: #F9F3EF;
+            border-color: #456882;
         }
         
         .content {
             height: calc(100vh - 80px);
-            overflow: hidden;
             margin-top: 80px;
-        }
-        
-        .tab-content {
-            height: 100%;
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
         }
         
         .map-container {
             height: 100%;
             width: 100%;
-        }
-        
-        .list-container {
-            padding: 24px;
-            max-width: 1200px;
-            margin: 0 auto;
-            overflow-y: auto;
-            height: 100%;
-        }
-        
-        .issue-card {
-            background: #F9F3EF;
-            border: 1px solid #456882;
-            border-radius: 4px;
-            padding: 22px;
-            margin-bottom: 18px;
-            box-shadow: 0 0 10px rgba(69, 104, 130, 0.2);
-            transition: all 0.2s ease;
-            position: relative;
-        }
-        
-        .issue-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: #1B3C53;
-        }
-        
-        .issue-card:hover {
-            box-shadow: 0 0 20px rgba(69, 104, 130, 0.4);
-            transform: translateX(4px);
-        }
-        
-        .issue-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 18px;
-        }
-        
-        .issue-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1B3C53;
-            margin: 0;
-            flex: 1;
-            margin-right: 16px;
-            font-family: 'Kanit', sans-serif;
-            letter-spacing: 0.3px;
-        }
-        
-        .location-badge {
-            background: #456882;
-            color: #F9F3EF;
-            border: 1px solid #456882;
-            padding: 4px 8px;
-            border-radius: 2px;
-            font-size: 11px;
-            font-weight: 500;
-            font-family: 'Kanit', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .issue-description {
-            color: #2C4A5C;
-            line-height: 1.5;
-            margin-bottom: 18px;
-            font-size: 14px;
-            font-weight: 400;
-            font-family: 'Kanit', sans-serif;
-        }
-        
-        .issue-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            font-size: 12px;
-            color: #6B5B73;
-            font-weight: 400;
-            font-family: 'Kanit', sans-serif;
-            letter-spacing: 0.3px;
-        }
-        
-        .material-icons {
-            font-size: 14px;
         }
         
         .loading {
@@ -211,23 +103,6 @@
             letter-spacing: 1px;
         }
         
-        .list-container::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .list-container::-webkit-scrollbar-track {
-            background: #F9F3EF;
-        }
-        
-        .list-container::-webkit-scrollbar-thumb {
-            background: #456882;
-            border-radius: 2px;
-        }
-        
-        .list-container::-webkit-scrollbar-thumb:hover {
-            background: #1B3C53;
-        }
-        
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -239,27 +114,13 @@
                 font-size: 22px;
             }
             
-            .tab {
-                padding: 12px 18px;
+            .nav-links {
+                gap: 12px;
+            }
+            
+            .nav-link {
                 font-size: 13px;
-            }
-            
-            .list-container {
-                padding: 18px;
-            }
-            
-            .issue-card {
-                padding: 18px;
-            }
-            
-            .issue-title {
-                font-size: 16px;
-            }
-            
-            .issue-header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 14px;
+                padding: 6px 12px;
             }
             
             .content {
@@ -267,225 +128,40 @@
                 margin-top: 108px;
             }
         }
-        
-        @media (max-width: 480px) {
-            .tabs {
-                width: 100%;
-            }
-            
-            .tab {
-                flex: 1;
-                justify-content: center;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>Karølín</h1>
-        <div class="tabs">
-            <button class="tab active" onclick="showTab('map')">
-                <span class="material-icons">map</span>
-                MAPA
-            </button>
-            <button class="tab" onclick="showTab('list')">
-                <span class="material-icons">list</span>
-                SEZNAM
-            </button>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link active">Mapa</a>
+            <a href="list.html" class="nav-link">Seznam</a>
         </div>
     </div>
     
     <div class="content">
-        <div id="map-tab" class="tab-content active">
-            <div class="map-container">
-                <div id="map" style="height: 100%; width: 100%;"></div>
-            </div>
-        </div>
-        
-        <div id="list-tab" class="tab-content">
-            <div class="list-container">
-                <div class="issue-card">
-                    <div class="issue-header">
-                        <h3 class="issue-title">Křižíkova: rozbité osvětlení</h3>
-                        <div class="location-badge">
-                            <span class="material-icons">location_on</span>
-                            gps
-                        </div>
-                    </div>
-                    <div class="issue-description">
-                        Pouliční svítidlo u tramvajové zastávky nefunguje, což činí oblast nebezpečnou v noci. <strong>priorita: vysoká</strong> - ovlivňuje bezpečnost chodců.
-                    </div>
-                    <div class="issue-meta">
-                        <span>vytvořeno: 15.6.2024</span>
-                    </div>
-                </div>
-
-                <div class="issue-card">
-                    <div class="issue-header">
-                        <h3 class="issue-title">Sokolovská: poškozený chodník</h3>
-                        <div class="location-badge">
-                            <span class="material-icons">location_on</span>
-                            gps
-                        </div>
-                    </div>
-                    <div class="issue-description">
-                        Velké trhliny v chodníku vytvářejí nebezpečí zakopnutí pro chodce. Více stížností od rezidentů ohledně problémů s přístupností.
-                    </div>
-                    <div class="issue-meta">
-                        <span>vytvořeno: 10.6.2024 (poslední aktualizace: 12.6.2024)</span>
-                    </div>
-                </div>
-
-                <div class="issue-card">
-                    <div class="issue-header">
-                        <h3 class="issue-title">Staveniště: hluk</h3>
-                    </div>
-                    <div class="issue-description">
-                        Stavební práce začínají příliš brzy ráno, porušují předpisy o hluku. Práce začíná v 06:00 namísto povolených 07:00.
-                    </div>
-                    <div class="issue-meta">
-                        <span>vytvořeno: 8.6.2024</span>
-                    </div>
-                </div>
-
-                <div class="issue-card">
-                    <div class="issue-header">
-                        <h3 class="issue-title">Budova Invalidovny: graffiti</h3>
-                        <div class="location-badge">
-                            <span class="material-icons">location_on</span>
-                            gps
-                        </div>
-                    </div>
-                    <div class="issue-description">
-                        Na fasádě historické budovy Invalidovny se objevily velké graffiti. Je potřeba okamžité odstranění pro zachování historického vzhledu.
-                    </div>
-                    <div class="issue-meta">
-                        <span>vytvořeno: 20.6.2024</span>
-                    </div>
-                </div>
-
-                <div class="issue-card">
-                    <div class="issue-header">
-                        <h3 class="issue-title">Karlínské náměstí: přeplněné odpadky</h3>
-                        <div class="location-badge">
-                            <span class="material-icons">location_on</span>
-                            gps
-                        </div>
-                    </div>
-                    <div class="issue-description">
-                        Odpadké koše kolem Karlínského náměstí jsou trvale přeplněné. Je potřeba častější svážky nebo další koše v dobách špičky.
-                    </div>
-                    <div class="issue-meta">
-                        <span>vytvořeno: 18.6.2024 (poslední aktualizace: 19.6.2024)</span>
-                    </div>
-                </div>
-
-                <div class="issue-card">
-                    <div class="issue-header">
-                        <h3 class="issue-title">Rohanské nábřeží: zablokován cyklopruh</h3>
-                        <div class="location-badge">
-                            <span class="material-icons">location_on</span>
-                            gps
-                        </div>
-                    </div>
-                    <div class="issue-description">
-                        Auta pravidelně parkují v cyklopruhu, nutí cyklisty do provozu. Je potřeba lepší vynucování a jasné značení.
-                    </div>
-                    <div class="issue-meta">
-                        <span>vytvořeno: 22.6.2024</span>
-                    </div>
-                </div>
-
-                <div class="issue-card">
-                    <div class="issue-header">
-                        <h3 class="issue-title">Pernerova ulice: výboje</h3>
-                        <div class="location-badge">
-                            <span class="material-icons">location_on</span>
-                            gps
-                        </div>
-                    </div>
-                    <div class="issue-description">
-                        Po nedávných stavebních pracích vzniklo několik velkých výbojů. Způsobují škody na vozidlech a vytvářejí bezpečnostní rizika.
-                    </div>
-                    <div class="issue-meta">
-                        <span>vytvořeno: 25.6.2024</span>
-                    </div>
-                </div>
-
-                <div class="issue-card">
-                    <div class="issue-header">
-                        <h3 class="issue-title">Karlínský park: rozbitá lavička</h3>
-                        <div class="location-badge">
-                            <span class="material-icons">location_on</span>
-                            gps
-                        </div>
-                    </div>
-                    <div class="issue-description">
-                        Dřevěná lavička blízko hřiště má rozbité latky. Oblíbené místo pro sedění rodičů sledujících si hrajoící děti.
-                    </div>
-                    <div class="issue-meta">
-                        <span>vytvořeno: 28.6.2024</span>
-                    </div>
-                </div>
-            </div>
+        <div class="map-container">
+            <div id="map" style="height: 100%; width: 100%;"></div>
         </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        const issues = [
-            {
-                id: '1',
-                name: 'Křižíkova: rozbité osvětlení',
-                description: 'Pouliční svítidlo u tramvajové zastávky nefunguje, což činí oblast nebezpečnou v noci.',
-                lat: 50.0924,
-                lng: 14.4468
-            },
-            {
-                id: '2',
-                name: 'Sokolovská: poškozený chodník',
-                description: 'Velké trhliny v chodníku vytvářejí nebezpečí zakopnutí pro chodce.',
-                lat: 50.0920,
-                lng: 14.4550
-            },
-            {
-                id: '4',
-                name: 'Budova Invalidovny: graffiti',
-                description: 'Na fasádě historické budovy Invalidovny se objevily velké graffiti.',
-                lat: 50.0950,
-                lng: 14.4400
-            },
-            {
-                id: '5',
-                name: 'Karlínské náměstí: přeplněné odpadky',
-                description: 'Odpadké koše kolem Karlínského náměstí jsou trvale přeplněné.',
-                lat: 50.0915,
-                lng: 14.4450
-            },
-            {
-                id: '6',
-                name: 'Rohanské nábřeží: zablokován cyklopruh',
-                description: 'Auta pravidelně parkují v cyklopruhu, nutí cyklisty do provozu.',
-                lat: 50.0965,
-                lng: 14.4480
-            },
-            {
-                id: '7',
-                name: 'Pernerova ulice: výboje',
-                description: 'Po nedávných stavebních pracích vzniklo několik velkých výbojů.',
-                lat: 50.0905,
-                lng: 14.4520
-            },
-            {
-                id: '8',
-                name: 'Karlínský park: rozbitá lavička',
-                description: 'Dřevěná lavička blízko hřiště má rozbité latky.',
-                lat: 50.0908,
-                lng: 14.4435
-            }
-        ];
-
         let map;
+        let issues = [];
+        
+        // Load issues from JSON
+        async function loadIssues() {
+            try {
+                const response = await fetch('issues.json');
+                const data = await response.json();
+                issues = data.issues;
+                initMap();
+            } catch (error) {
+                console.error('Error loading issues:', error);
+                document.getElementById('map').innerHTML = '<div class="loading">Chyba při načítání dat</div>';
+            }
+        }
         
         function initMap() {
             const karlinCenter = [50.0957885, 14.4558222];
@@ -514,14 +190,18 @@
             map.options.minZoom = 14;
             map.options.maxZoom = 18;
 
+            // Add issue markers
             issues.forEach(issue => {
-                const marker = L.marker([issue.lat, issue.lng]).addTo(map);
-                marker.bindPopup(`
-                    <div style="font-family: 'Kanit', sans-serif; background: #F9F3EF; color: #1B3C53; padding: 10px; margin: 0; border: 1px solid #456882;">
-                        <h4 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: #1B3C53; letter-spacing: 0.3px;">${issue.name}</h4>
-                        <p style="margin: 0; font-size: 14px; font-weight: 400; color: #2C4A5C; line-height: 1.5;">${issue.description}</p>
-                    </div>
-                `);
+                if (issue.lat && issue.lng) {
+                    const marker = L.marker([issue.lat, issue.lng]).addTo(map);
+                    marker.bindPopup(`
+                        <div style="font-family: 'Kanit', sans-serif; background: #F9F3EF; color: #1B3C53; padding: 10px; margin: 0; border: 1px solid #456882;">
+                            <h4 style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #1B3C53; letter-spacing: 0.3px;">${issue.name}</h4>
+                            <p style="margin: 0 0 10px 0; font-size: 13px; font-weight: 400; color: #2C4A5C; line-height: 1.5;">${issue.description}</p>
+                            <a href="detail.html?id=${issue.id}" style="display: inline-block; background: #456882; color: #F9F3EF; padding: 6px 12px; text-decoration: none; font-size: 12px; font-weight: 500; border-radius: 2px;">Detail problému</a>
+                        </div>
+                    `);
+                }
             });
             
             const style = document.createElement('style');
@@ -570,26 +250,9 @@
             document.head.appendChild(style);
         }
 
-        function showTab(tabName) {
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.closest('.tab').classList.add('active');
-            
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById(tabName + '-tab').classList.add('active');
-            
-            if (tabName === 'map' && map) {
-                setTimeout(() => {
-                    map.invalidateSize();
-                }, 100);
-            }
-        }
-
+        // Initialize when page loads
         window.addEventListener('load', function() {
-            initMap();
+            loadIssues();
         });
     </script>
 </body>

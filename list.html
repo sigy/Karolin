@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karølín - Seznam problémů</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #F9F3EF;
+            color: #1B3C53;
+            line-height: 1.4;
+        }
+        
+        .header {
+            background: #1B3C53;
+            color: #F9F3EF;
+            padding: 18px 24px;
+            box-shadow: 0 2px 8px rgba(27, 60, 83, 0.2);
+            border-bottom: 1px solid #456882;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin: 0;
+            font-family: 'Kanit', sans-serif;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            color: #F9F3EF;
+        }
+        
+        .header h1:hover {
+            opacity: 0.8;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: #F9F3EF;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 16px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .nav-link:hover {
+            border-color: #456882;
+            background: rgba(69, 104, 130, 0.2);
+        }
+        
+        .nav-link.active {
+            background: #456882;
+            border-color: #456882;
+        }
+        
+        .content {
+            margin-top: 80px;
+            padding: 24px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .list-container {
+            padding: 0;
+        }
+        
+        .issue-card {
+            background: #F9F3EF;
+            border: 1px solid #456882;
+            border-radius: 4px;
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 0 10px rgba(69, 104, 130, 0.2);
+            transition: all 0.2s ease;
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .issue-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #1B3C53;
+        }
+        
+        .issue-card:hover {
+            box-shadow: 0 0 20px rgba(69, 104, 130, 0.4);
+            transform: translateX(4px);
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .issue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+        
+        .issue-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1B3C53;
+            margin: 0;
+            flex: 1;
+            margin-right: 16px;
+            font-family: 'Kanit', sans-serif;
+            letter-spacing: 0.3px;
+        }
+        
+        .location-badge {
+            background: #456882;
+            color: #F9F3EF;
+            border: 1px solid #456882;
+            padding: 4px 8px;
+            border-radius: 2px;
+            font-size: 11px;
+            font-weight: 500;
+            font-family: 'Kanit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .issue-description {
+            color: #2C4A5C;
+            line-height: 1.5;
+            margin-bottom: 18px;
+            font-size: 14px;
+            font-weight: 400;
+            font-family: 'Kanit', sans-serif;
+        }
+        
+        .issue-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 12px;
+            color: #6B5B73;
+            font-weight: 400;
+            font-family: 'Kanit', sans-serif;
+            letter-spacing: 0.3px;
+        }
+        
+        .material-icons {
+            font-size: 14px;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+            font-size: 14px;
+            color: #1B3C53;
+            font-family: 'Kanit', sans-serif;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 14px;
+                padding: 14px 18px;
+            }
+            
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .nav-links {
+                gap: 12px;
+            }
+            
+            .nav-link {
+                font-size: 13px;
+                padding: 6px 12px;
+            }
+            
+            .content {
+                margin-top: 108px;
+                padding: 18px;
+            }
+            
+            .issue-card {
+                padding: 18px;
+            }
+            
+            .issue-title {
+                font-size: 16px;
+            }
+            
+            .issue-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" style="text-decoration: none;"><h1>Karølín</h1></a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Mapa</a>
+            <a href="list.html" class="nav-link active">Seznam</a>
+        </div>
+    </div>
+    
+    <div class="content">
+        <div class="list-container" id="issuesList">
+            <div class="loading">Načítání problémů...</div>
+        </div>
+    </div>
+
+    <script>
+        let issues = [];
+        
+        // Load issues from JSON
+        async function loadIssues() {
+            try {
+                const response = await fetch('issues.json');
+                const data = await response.json();
+                issues = data.issues;
+                renderIssuesList();
+            } catch (error) {
+                console.error('Error loading issues:', error);
+                document.getElementById('issuesList').innerHTML = '<div class="loading">Chyba při načítání dat</div>';
+            }
+        }
+        
+        function renderIssuesList() {
+            const container = document.getElementById('issuesList');
+            
+            if (issues.length === 0) {
+                container.innerHTML = '<div class="loading">Žádné problémy nenalezeny</div>';
+                return;
+            }
+            
+            const issuesHTML = issues.map(issue => {
+                const hasGPS = issue.lat && issue.lng;
+                const gpsLabel = hasGPS ? `
+                    <div class="location-badge">
+                        <span class="material-icons">location_on</span>
+                        gps
+                    </div>
+                ` : '';
+                
+                const updatedText = issue.updated && issue.updated !== issue.created 
+                    ? ` (poslední aktualizace: ${formatDate(issue.updated)})`
+                    : '';
+                
+                return `
+                    <a href="detail.html?id=${issue.id}" class="issue-card">
+                        <div class="issue-header">
+                            <h3 class="issue-title">${issue.name}</h3>
+                            ${gpsLabel}
+                        </div>
+                        <div class="issue-description">
+                            ${issue.description}
+                        </div>
+                        <div class="issue-meta">
+                            <span>vytvořeno: ${formatDate(issue.created)}${updatedText}</span>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+            
+            container.innerHTML = issuesHTML;
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('load', function() {
+            loadIssues();
+        });
+    </script>
+</body>
+</html>

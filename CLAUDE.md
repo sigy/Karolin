@@ -13,7 +13,8 @@ A simple, universal web application for tracking and managing issues in the Karl
 - **Language**: Czech language throughout the application
 
 ## Architecture
-- **Single-file application**: All code contained in `index.html`
+- **Multi-page application**: Three separate HTML pages with shared design
+- **JSON data storage**: Issues stored in external JSON file
 - **No build process**: Runs directly in any modern browser
 - **No server required**: Works from local file system
 - **CDN dependencies**: All external libraries loaded via CDN
@@ -22,20 +23,27 @@ A simple, universal web application for tracking and managing issues in the Karl
 ## Project Structure
 ```
 karolin/
-├── index.html             # Complete standalone application
+├── index.html             # Interactive map page
+├── list.html              # Issues list page
+├── detail.html            # Issue detail page
+├── issues.json            # Issues data storage
 ├── CLAUDE.md              # This specification file
+├── README.md              # GitHub documentation
 └── .gitignore             # Git ignore file
 ```
 
 ## Data Model
-Issues are stored as JavaScript objects with the following structure:
+Issues are stored in `issues.json` with the following structure:
 ```javascript
 {
   id: string,
   name: string,           // Format: "Location: issue name" (not capitalized)
   description: string,
-  lat: number,           // GPS latitude
-  lng: number            // GPS longitude
+  markup: string,         // Detailed markdown-style description
+  lat: number,           // GPS latitude (null if no GPS)
+  lng: number,           // GPS longitude (null if no GPS)
+  created: string,       // Date in YYYY-MM-DD format
+  updated: string        // Date in YYYY-MM-DD format
 }
 ```
 
@@ -48,22 +56,29 @@ Issues are stored as JavaScript objects with the following structure:
 - **Responsive design**: Adapts to mobile and desktop screens
 - **Accessibility**: WCAG 2.1 AA compliance throughout
 
-### 2. Interactive Map Tab
+### 2. Interactive Map Page (index.html)
 - **Leaflet.js integration**: Lightweight, accessible mapping library
 - **Light theme tiles**: Clean, readable map background
 - **District boundaries**: Map bounds restricted to Karlín area with gutter
 - **Issue markers**: 7 POI markers for geolocated issues
-- **Simple popups**: Clean popups without borders, matching design system
+- **Simple popups**: Clean popups with links to detail pages
 - **Zoom controls**: Limited to levels 14-18 for optimal district viewing
 
-### 3. Comprehensive List Tab
+### 3. Issues List Page (list.html)
 - **Clean cards**: Each issue displayed in elevated card with left accent
 - **GPS badges**: Solid badges for geolocated issues only
 - **Czech content**: Issue titles, descriptions, and dates in Czech
 - **Responsive layout**: Cards adapt to screen width
-- **Hover effects**: Subtle animations with accessible focus states
+- **Clickable cards**: Each card links to detailed issue page
 
-### 4. Sample Issues (8 total - Czech)
+### 4. Issue Detail Page (detail.html)
+- **URL parameters**: Loads specific issue using ?id=X parameter
+- **Complete information**: Shows all issue data plus detailed markup
+- **Markdown parsing**: Renders markup field with headers and formatting
+- **Minimal navigation**: Back button using browser history
+- **Error handling**: Appropriate messages for missing issues
+
+### 5. Sample Issues (8 total - Czech)
 1. **Křižíkova: rozbité osvětlení** - Safety concern with GPS location
 2. **Sokolovská: poškozený chodník** - Accessibility issue with GPS location
 3. **Staveniště: hluk** - Regulatory violation (no GPS)
@@ -89,13 +104,19 @@ The map is geographically bounded by these GPS coordinates with added gutter:
 ## Installation & Usage
 
 ### Method 1: Direct File Access (Recommended)
-1. Download/save `index.html` to your computer
-2. Double-click the file to open in your default browser
-3. Or drag and drop the file into any browser window
+1. Download/save all files (`index.html`, `list.html`, `detail.html`, `issues.json`) to your computer
+2. Double-click `index.html` to open in your default browser
+3. Navigate between pages using the interface
 
 ### Method 2: File URL
 1. Navigate to the file location in your browser:
    `file:///path/to/karolin/index.html`
+
+### Method 3: Local Server (if needed)
+```bash
+python3 -m http.server 8000
+# Then visit http://localhost:8000
+```
 
 ### Method 3: GitHub Pages
 - Live demo available at: https://sigy.github.io/Karolin
@@ -161,9 +182,10 @@ The map is geographically bounded by these GPS coordinates with added gutter:
 - **Font Weights**: Increased weights for better readability
 
 ## Performance Features
-- **Lightweight**: Single HTML file under 20KB
+- **Lightweight**: Total application under 50KB (HTML + JSON)
 - **Fast Loading**: CDN resources cached by browsers
 - **Efficient Rendering**: No framework overhead
+- **JSON Loading**: Async data loading with fetch API
 - **Mobile Optimized**: Responsive breakpoints and touch-friendly UI
 - **Accessible Design**: No performance impact from accessibility features
 
@@ -180,7 +202,8 @@ The map is geographically bounded by these GPS coordinates with added gutter:
 - **Main branch**: `main`
 - **Authentication**: SSH configured for sigy@sigy.cz
 - **Clean codebase**: Removed all React/Vite artifacts
-- **Single file**: Complete application in index.html
+- **Multi-page structure**: Three HTML pages with shared navigation
+- **Data separation**: Issues stored in external JSON file
 
 ## Future Enhancement Possibilities
 - **Data Persistence**: Local storage for user-added issues
@@ -188,4 +211,6 @@ The map is geographically bounded by these GPS coordinates with added gutter:
 - **Filtering/Search**: Client-side filtering by category or location
 - **Offline Support**: Service worker for full offline functionality
 - **Print Styles**: Optimized CSS for printing issue reports
+- **Advanced Markdown**: Full markdown rendering for markup field
+- **Image Support**: Photo attachments for issues
 - **GitHub Pages**: Automatic deployment from main branch
