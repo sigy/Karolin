@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Karølín</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Kanit:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         * {
@@ -15,18 +15,18 @@
         }
         
         body {
-            font-family: 'JetBrains Mono', monospace;
-            background-color: #0a0f1b;
-            color: #00d4ff;
+            font-family: 'Kanit', sans-serif;
+            background-color: #F9F3EF;
+            color: #1B3C53;
             line-height: 1.4;
         }
         
         .header {
-            background: #1a2332;
-            color: #00d4ff;
-            padding: 16px 20px;
-            box-shadow: 0 2px 8px rgba(0, 212, 255, 0.2);
-            border-bottom: 1px solid #00d4ff;
+            background: #1B3C53;
+            color: #F9F3EF;
+            padding: 18px 24px;
+            box-shadow: 0 2px 8px rgba(27, 60, 83, 0.2);
+            border-bottom: 1px solid #456882;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -38,17 +38,17 @@
         }
         
         .header h1 {
-            font-size: 24px;
-            font-weight: 500;
+            font-size: 28px;
+            font-weight: 600;
             margin: 0;
             font-family: 'Kanit', sans-serif;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         
         .tabs {
             display: flex;
             gap: 0;
-            border: 1px solid #00d4ff;
+            border: 1px solid #456882;
             border-radius: 4px;
             overflow: hidden;
         }
@@ -56,19 +56,19 @@
         .tab {
             background: transparent;
             border: none;
-            padding: 12px 20px;
+            padding: 14px 22px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 500;
-            color: #00d4ff;
-            font-family: 'JetBrains Mono', monospace;
+            color: #F9F3EF;
+            font-family: 'Kanit', sans-serif;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             display: flex;
             align-items: center;
             gap: 6px;
             transition: all 0.2s;
-            border-right: 1px solid #00d4ff;
+            border-right: 1px solid #456882;
         }
         
         .tab:last-child {
@@ -76,18 +76,18 @@
         }
         
         .tab:hover {
-            background: rgba(0, 212, 255, 0.1);
+            background: rgba(69, 104, 130, 0.2);
         }
         
         .tab.active {
-            background: #00d4ff;
-            color: #0a0f1b;
+            background: #456882;
+            color: #F9F3EF;
         }
         
         .content {
-            height: calc(100vh - 65px);
+            height: calc(100vh - 80px);
             overflow: hidden;
-            margin-top: 65px;
+            margin-top: 80px;
         }
         
         .tab-content {
@@ -113,12 +113,12 @@
         }
         
         .issue-card {
-            background: #1a2332;
-            border: 1px solid #00d4ff;
+            background: #F9F3EF;
+            border: 1px solid #456882;
             border-radius: 4px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 0 10px rgba(69, 104, 130, 0.2);
             transition: all 0.2s ease;
             position: relative;
         }
@@ -130,11 +130,11 @@
             left: 0;
             width: 4px;
             height: 100%;
-            background: #00d4ff;
+            background: #1B3C53;
         }
         
         .issue-card:hover {
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 0 20px rgba(69, 104, 130, 0.4);
             transform: translateX(4px);
         }
         
@@ -142,29 +142,29 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
         
         .issue-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #00d4ff;
+            font-size: 18px;
+            font-weight: 600;
+            color: #1B3C53;
             margin: 0;
             flex: 1;
             margin-right: 16px;
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.5px;
+            font-family: 'Kanit', sans-serif;
+            letter-spacing: 0.3px;
         }
         
         .location-badge {
-            background: transparent;
-            color: #00ff88;
-            border: 1px solid #00ff88;
+            background: #456882;
+            color: #F9F3EF;
+            border: 1px solid #456882;
             padding: 4px 8px;
             border-radius: 2px;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 500;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Kanit', sans-serif;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             display: flex;
@@ -173,10 +173,12 @@
         }
         
         .issue-description {
-            color: #8fa3b8;
-            line-height: 1.6;
-            margin-bottom: 16px;
-            font-size: 13px;
+            color: #2C4A5C;
+            line-height: 1.5;
+            margin-bottom: 18px;
+            font-size: 14px;
+            font-weight: 400;
+            font-family: 'Kanit', sans-serif;
         }
         
         .issue-meta {
@@ -185,9 +187,11 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 8px;
-            font-size: 10px;
-            color: #4a6175;
-            letter-spacing: 0.5px;
+            font-size: 12px;
+            color: #6B5B73;
+            font-weight: 400;
+            font-family: 'Kanit', sans-serif;
+            letter-spacing: 0.3px;
         }
         
         .material-icons {
@@ -200,8 +204,9 @@
             align-items: center;
             height: 100%;
             font-size: 14px;
-            color: #00d4ff;
-            font-family: 'JetBrains Mono', monospace;
+            color: #1B3C53;
+            font-family: 'Kanit', sans-serif;
+            font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -211,55 +216,55 @@
         }
         
         .list-container::-webkit-scrollbar-track {
-            background: #0a0f1b;
+            background: #F9F3EF;
         }
         
         .list-container::-webkit-scrollbar-thumb {
-            background: #00d4ff;
+            background: #456882;
             border-radius: 2px;
         }
         
         .list-container::-webkit-scrollbar-thumb:hover {
-            background: #00ff88;
+            background: #1B3C53;
         }
         
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
-                gap: 12px;
-                padding: 12px 16px;
+                gap: 14px;
+                padding: 14px 18px;
             }
             
             .header h1 {
-                font-size: 16px;
+                font-size: 22px;
             }
             
             .tab {
-                padding: 10px 16px;
-                font-size: 11px;
+                padding: 12px 18px;
+                font-size: 13px;
             }
             
             .list-container {
-                padding: 16px;
+                padding: 18px;
             }
             
             .issue-card {
-                padding: 16px;
+                padding: 18px;
             }
             
             .issue-title {
-                font-size: 14px;
+                font-size: 16px;
             }
             
             .issue-header {
                 flex-direction: column;
                 align-items: stretch;
-                gap: 12px;
+                gap: 14px;
             }
             
             .content {
-                height: calc(100vh - 95px);
-                margin-top: 95px;
+                height: calc(100vh - 108px);
+                margin-top: 108px;
             }
         }
         
@@ -512,9 +517,9 @@
             issues.forEach(issue => {
                 const marker = L.marker([issue.lat, issue.lng]).addTo(map);
                 marker.bindPopup(`
-                    <div style="max-width: 200px; font-family: 'JetBrains Mono', monospace; background: #1a2332; color: #00d4ff; padding: 8px; border: none;">
-                        <h4 style="margin: 0 0 8px 0; font-size: 12px; font-weight: 700; letter-spacing: 0.5px;">${issue.name}</h4>
-                        <p style="margin: 0; font-size: 11px; color: #8fa3b8; line-height: 1.4;">${issue.description}</p>
+                    <div style="font-family: 'Kanit', sans-serif; background: #F9F3EF; color: #1B3C53; padding: 10px; margin: 0; border: 1px solid #456882;">
+                        <h4 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: #1B3C53; letter-spacing: 0.3px;">${issue.name}</h4>
+                        <p style="margin: 0; font-size: 14px; font-weight: 400; color: #2C4A5C; line-height: 1.5;">${issue.description}</p>
                     </div>
                 `);
             });
@@ -526,34 +531,38 @@
                 .leaflet-popup-content,
                 .leaflet-popup-content-wrapper,
                 .leaflet-popup-tip {
-                    font-family: 'JetBrains Mono', monospace !important;
+                    font-family: 'Kanit', sans-serif !important;
                 }
                 .leaflet-popup-content-wrapper {
                     border: none !important;
                     border-radius: 0 !important;
-                    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3) !important;
+                    box-shadow: none !important;
+                    background: transparent !important;
+                    padding: 0 !important;
+                }
+                .leaflet-popup-content {
+                    margin: 0 !important;
+                    padding: 0 !important;
                 }
                 .leaflet-popup-tip {
-                    border: none !important;
-                    background: transparent !important;
-                    box-shadow: none !important;
+                    display: none !important;
                 }
                 .leaflet-control-zoom a {
-                    background-color: #1a2332 !important;
-                    color: #00d4ff !important;
-                    border: 1px solid #00d4ff !important;
+                    background-color: #F9F3EF !important;
+                    color: #1B3C53 !important;
+                    border: 1px solid #456882 !important;
                     border-radius: 0 !important;
                     text-align: center !important;
                     line-height: 24px !important;
                 }
                 .leaflet-control-zoom a:hover {
-                    background-color: #00d4ff !important;
-                    color: #1a2332 !important;
+                    background-color: #456882 !important;
+                    color: #F9F3EF !important;
                 }
                 .leaflet-control-attribution {
-                    background-color: rgba(26, 35, 50, 0.8) !important;
-                    color: #8fa3b8 !important;
-                    border: none !important;
+                    background-color: rgba(249, 243, 239, 0.95) !important;
+                    color: #2C4A5C !important;
+                    border: 1px solid #456882 !important;
                     border-radius: 0 !important;
                     padding: 2px 4px !important;
                 }
